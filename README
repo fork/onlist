@@ -1,0 +1,27 @@
+Onlist
+======
+
+Adds white- and blacklisting capabilities to models.
+
+Setup
+=====
+
+  script/generate onlist
+
+Example
+=======
+
+  class Article < ActiveRecord::Base
+    onlist :updates => :updated_at
+    when_accepted :notify_author
+
+    # ...
+
+  end
+
+  entry = Entry.new
+  entry.unlisted? # => true
+
+  Entry.unlisted # => []
+
+Copyright (c) 2008 Fork Unstable Media GmbH, released under the MIT license

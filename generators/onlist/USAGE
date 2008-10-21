@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    ./script/generate onlist
+
+    This will create:
+        db/migrate/20081021174922_onlists.rb
