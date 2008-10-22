@@ -18,11 +18,11 @@ class Onlist::Proxy
 
   def accept
     entry.accepted = true
-    entry.save and run_callbacks(:when_accepted)
+    entry.save and @item.run_callbacks(:when_accepted)
   end
   def reject
     entry.accepted = false
-    entry.save and run_callbacks(:when_rejected)
+    entry.save and @item.run_callbacks(:when_rejected)
   end
 
 end

@@ -7,8 +7,11 @@ class Onlist < ActiveRecord::Base
   after_destroy :update_timestamp_of_onlisted
 
   def update_timestamp_of_onlisted
-    column = onlisted.onlist_options[:updates] or return
-    onlisted.class.update onlisted.id, column => updated_at
+    column      = onlisted.onlist_options[:updates] or return
+    updates     = { column => frozen?? Time.now : updated_at }
+    conditions  = { onlisted.class.primary_key => onlisted.id }
+
+    onlisted.class.update_all updates, conditions
   end
   protected :update_timestamp_of_onlisted
 
