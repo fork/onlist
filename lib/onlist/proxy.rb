@@ -6,8 +6,8 @@ class Onlist::Proxy
 
   def conditions(extras = {})
     {
-      :enlisted_type => @item.class.base_class,
-      :enlisted_id   => @item.id
+      :onlisted_type => @item.class.base_class.name,
+      :onlisted_id   => @item.id
     }.
     merge extras
   end
