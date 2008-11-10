@@ -15,3 +15,25 @@ module Onlist::InstanceMethods
   end
 
 end
+
+module Onlist::Blacklist::InstanceMethods
+  include Onlist::InstanceMethods
+
+  def onlist
+    Onlist::Blacklist::Proxy.new self
+  end
+
+  alias_method :accepted?, :unlisted?
+
+end
+
+module Onlist::Whitelist::InstanceMethods
+  include Onlist::InstanceMethods
+
+  def onlist
+    Onlist::Whitelist::Proxy.new self
+  end
+
+  alias_method :rejected?, :unlisted?
+
+end

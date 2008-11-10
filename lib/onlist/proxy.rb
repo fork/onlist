@@ -26,3 +26,15 @@ class Onlist::Proxy
   end
 
 end
+
+class Onlist::Whitelist::Proxy < Onlist::Proxy
+  def reject
+    entry.destroy and @item.run_callbacks(:when_rejected)
+  end
+end
+
+class Onlist::Blacklist::Proxy < Onlist::Proxy
+  def accept
+    entry.destroy and @item.run_callbacks(:when_accepted)
+  end
+end

@@ -15,4 +15,7 @@ class Onlist < ActiveRecord::Base
   end
   protected :update_timestamp_of_onlisted
 
+  Whitelist = Module.new
+  Blacklist = Module.new
+
 end
