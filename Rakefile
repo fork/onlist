@@ -15,7 +15,7 @@ end
 desc 'Generate documentation for the whitelist plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'Whitelist'
+  rdoc.title    = 'Onlist | white- and blacklisting'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
