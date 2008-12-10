@@ -46,7 +46,7 @@ module Onlist::Blacklist::ClassMethods
     Onlist::ClassMethods.define_callbacks base
     Onlist::ClassMethods.register_named_scopes base
 
-    class << base; alias_method :accepted, :unlisted; end
+    base.class_eval { scopes[:accepted] = scopes[:unlisted] }
   end
 
 end
@@ -59,7 +59,7 @@ module Onlist::Whitelist::ClassMethods
     Onlist::ClassMethods.define_callbacks base
     Onlist::ClassMethods.register_named_scopes base
 
-    class << base; alias_method :rejected, :unlisted; end
+    base.class_eval { scopes[:rejected] = scopes[:unlisted] }
   end
 
 end
