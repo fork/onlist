@@ -16,11 +16,11 @@ module Onlist::ClassMethods
   end
 
   def accept(id)
-    entry = find id, :include => :oli
+    entry = find id
     entry.onlist.accept
   end
   def reject(id)
-    entry = find id, :include => :oli
+    entry = find id
     entry.onlist.reject
   end
 
