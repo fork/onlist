@@ -25,9 +25,12 @@ module Onlist::ClassMethods
   end
 
   def self.register_named_scopes(base)
-    base.named_scope :unlisted,
-      :joins => "LEFT OUTER JOIN onlists ON onlists.onlisted_id = #{ base.quoted_table_name }.#{ base.primary_key } AND onlists.onlisted_type = #{ base.quote_value base.base_class.name, base.columns_hash[base.inheritance_column] }",
-      :conditions => {'onlists.id' => nil}
+    base.named_scope :unlisted, proc {
+      {
+        :joins => "LEFT OUTER JOIN onlists ON onlists.onlisted_id = #{ base.quoted_table_name }.#{ base.primary_key } AND onlists.onlisted_type = #{ base.quote_value base.base_class.name, base.columns_hash[base.inheritance_column] }",
+        :conditions => {'onlists.id' => nil}
+      }
+    }
     base.named_scope :accepted,
       :joins => :oli,
       :conditions => {'onlists.accepted' => true}
