@@ -11,7 +11,7 @@ module Onlist::InstanceMethods
     Onlist.exists? onlist.conditions(:accepted => false)
   end
   def unlisted?
-    not Onlist.exists? onlist.entry.id
+    not Onlist.exists? onlist.conditions
   end
 
 end
