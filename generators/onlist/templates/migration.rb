@@ -1,6 +1,6 @@
 class <%= class_name %> < ActiveRecord::Migration
   def self.up
-    create_table :onlists do |t|
+    create_table :onlist do |t|
       t.references :onlisted, :null => false, :polymorphic => true
       t.boolean :accepted
       t.timestamps

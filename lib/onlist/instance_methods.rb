@@ -1,39 +1,19 @@
-module Onlist::InstanceMethods
+module Onlist
+  module InstanceMethods
 
-  def onlist
-    Onlist::Proxy.new self
+    def onlist
+      Onlist::Proxy.new self
+    end
+
+    def accepted?
+      Onlist::Entry.exists? onlist.conditions(:accepted => true)
+    end
+    def rejected?
+      Onlist::Entry.exists? onlist.conditions(:accepted => false)
+    end
+    def unlisted?
+      not Onlist::Entry.exists? onlist.conditions
+    end
+
   end
-
-  def accepted?
-    Onlist.exists? onlist.conditions(:accepted => true)
-  end
-  def rejected?
-    Onlist.exists? onlist.conditions(:accepted => false)
-  end
-  def unlisted?
-    not Onlist.exists? onlist.conditions
-  end
-
-end
-
-module Onlist::Blacklist::InstanceMethods
-  include Onlist::InstanceMethods
-
-  def onlist
-    Onlist::Blacklist::Proxy.new self
-  end
-
-  alias_method :accepted?, :unlisted?
-
-end
-
-module Onlist::Whitelist::InstanceMethods
-  include Onlist::InstanceMethods
-
-  def onlist
-    Onlist::Whitelist::Proxy.new self
-  end
-
-  alias_method :rejected?, :unlisted?
-
 end

@@ -1,8 +1,8 @@
 require "#{ File.dirname __FILE__ }/../initializer.rb"
 
-describe 'Extended model' do
+describe 'Extended Item' do
 
-  before(:each) { Onlist.delete_all }
+  before(:each) { Onlist::Entry.delete_all }
 
   it "should have an oli" do
     Item.should.have_one :oli

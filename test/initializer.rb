@@ -6,18 +6,20 @@ ActiveRecord::Base.establish_connection(
  :database  => ':memory:'
 )
 
-if $-v or true
+if true
   ActiveRecord::Base.logger = ActiveSupport::BufferedLogger.new(STDOUT)
   ActiveRecord::Base.colorize_logging = false
 end
 
-ActiveRecord::Base.connection.create_table :items do |t|
-  t.timestamps
-end
-ActiveRecord::Base.connection.create_table :onlists do |t|
-  t.references :onlisted, :null => false, :polymorphic => true
-  t.boolean :accepted
-  t.timestamps
+ActiveRecord::Base.connection.instance_eval do
+  create_table :onlist do |t|
+    t.references :onlisted, :null => false, :polymorphic => true
+    t.boolean :accepted
+    t.timestamps
+  end
+  create_table :items do |t|
+    t.timestamps
+  end
 end
 
 require 'test/spec'
@@ -45,6 +47,7 @@ end
 
 $: << "#{ File.dirname __FILE__ }/../lib"
 require "#{ File.dirname __FILE__ }/../init.rb"
+require "#{ File.dirname __FILE__ }/../install/entry"
 
 class Item < ActiveRecord::Base
   onlist :updates => :updated_at

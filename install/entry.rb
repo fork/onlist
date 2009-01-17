@@ -1,5 +1,6 @@
 # Author:: Florian Aßmann (flazy@fork.de)
-class Onlist < ActiveRecord::Base
+class Onlist::Entry < ActiveRecord::Base
+  self.table_name = 'onlist'
 
   belongs_to :onlisted, :polymorphic => true
 
@@ -14,8 +15,5 @@ class Onlist < ActiveRecord::Base
     onlisted.class.update_all updates, conditions
   end
   protected :update_timestamp_of_onlisted
-
-  Whitelist = Module.new
-  Blacklist = Module.new
 
 end

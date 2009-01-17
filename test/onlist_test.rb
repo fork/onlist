@@ -3,7 +3,7 @@ require "#{ File.dirname __FILE__ }/initializer.rb"
 describe 'Onlist' do
 
   it "should belong to onlisted" do
-    Onlist.should.belong_to :onlisted
+    Onlist::Entry.should.belong_to :onlisted
   end
 
   it "should update foreign timestamp when saved" do

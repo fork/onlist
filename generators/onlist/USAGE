@@ -1,8 +1,8 @@
 Description:
-    Explain the generator
+    Generates a onlist migration.
 
 Example:
     ./script/generate onlist
 
     This will create:
-        db/migrate/20081021174922_onlists.rb
+        db/migrate/20081021174922_add_onlist.rb
