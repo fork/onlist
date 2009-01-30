@@ -14,11 +14,14 @@ end
 ActiveRecord::Base.connection.instance_eval do
   create_table :onlist do |t|
     t.references :onlisted, :null => false, :polymorphic => true
-    t.boolean :accepted
-    t.timestamps
+    t.timestamp :accepted_at
+    t.timestamp :rejected_at
   end
   create_table :items do |t|
-    t.timestamps
+    t.timestamp :accepted_at
+    t.timestamp :rejected_at
+    t.timestamp :published_at
+    t.timestamp :hidden_at
   end
 end
 
@@ -49,8 +52,4 @@ $: << "#{ File.dirname __FILE__ }/../lib"
 require "#{ File.dirname __FILE__ }/../init.rb"
 require "#{ File.dirname __FILE__ }/../install/entry"
 
-class Item < ActiveRecord::Base
-  onlist :updates => :updated_at
-end
-
-3.times { Item.create }
+class Item < ActiveRecord::Base; end
