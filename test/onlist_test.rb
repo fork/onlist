@@ -1,9 +1,9 @@
 require "#{ File.dirname __FILE__ }/initializer.rb"
 
-describe 'Onlist' do
+describe 'Onlist Entry' do
 
-  it "should belong to onlisted" do
-    Onlist::Entry.should.belong_to :onlisted
+  it "should belong to listed" do
+    Onlist::Entry.should.belong_to :listed
   end
 
 end
