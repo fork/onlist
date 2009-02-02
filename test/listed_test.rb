@@ -1,14 +1,20 @@
 require "#{ File.dirname __FILE__ }/test_helper.rb"
 
-def create_items(n)
-  items = Array.new(n) { |i| Item.create }
-  yield(*items) if block_given?
-ensure
-  items and items.each(&:destroy)
+class Item < ActiveRecord::Base; end
+
+module Factory
+  def create_items(n)
+    items = Array.new(n) { |i| Item.create }
+    yield(*items) if block_given?
+  ensure
+    items and items.each(&:destroy)
+  end
+  def create_item(&block)
+    create_items 1, &block
+  end
 end
-def create_item(&block)
-  create_items 1, &block
-end
+Test::Unit::TestCase.class_eval { include Factory }
+
 def describe_scopes(context)
   context.it 'should scope n unlisted items' do
     n = 2

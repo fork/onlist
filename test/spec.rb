@@ -410,7 +410,7 @@ class Test::Spec::TestCase
       
       self.count += 1                 # Let them run in order of definition
       
-      define_method("test_spec {%s} %03d [%s]" % [name, count, specname], &block)
+      define_method("test_spec %03d { %s - %s }" % [count, name, specname], &block)
     end
 
     def xspecify(specname, &block)
