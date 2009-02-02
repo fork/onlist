@@ -1,4 +1,4 @@
-require "#{ File.dirname __FILE__ }/../initializer.rb"
+require "#{ File.dirname __FILE__ }/test_helper.rb"
 
 def create_items(n)
   items = Array.new(n) { |i| Item.create }
@@ -9,11 +9,8 @@ end
 def create_item(&block)
   create_items 1, &block
 end
-
-describe 'Item scopes when associated' do
-  Item.onlist
-
-  it 'should scope n unlisted items' do
+def describe_scopes(context)
+  context.it 'should scope n unlisted items' do
     n = 2
 
     create_items(n) { |*items|
@@ -22,8 +19,7 @@ describe 'Item scopes when associated' do
       Item.unlisted.all.should.be.empty
     }
   end
-
-  it 'should scope n accepted items' do
+  context.it 'should scope n accepted items' do
     n = 3
 
     create_items(n) { |*items|
@@ -32,8 +28,7 @@ describe 'Item scopes when associated' do
       Item.accepted.should.be items.first(1)
     }
   end
-
-  it 'should scope n rejected items' do
+  context.it 'should scope n rejected items' do
     n = 3
 
     create_items(n) { |*items|
@@ -42,8 +37,7 @@ describe 'Item scopes when associated' do
       Item.rejected.should.be items.first(1)
     }
   end
-
-  it 'should scope n not rejected items' do
+  context.it 'should scope n not rejected items' do
     n = 3
 
     create_items(n) { |*items|
@@ -55,8 +49,7 @@ describe 'Item scopes when associated' do
       Item.not_rejected.sort_by { |i| i.id }.should.be not_rejected_items
     }
   end
-
-  it 'should scope n not accepted items' do
+  context.it 'should scope n not accepted items' do
     n = 3
 
     create_items(n) { |*items|
@@ -68,25 +61,16 @@ describe 'Item scopes when associated' do
       Item.not_accepted.sort_by { |i| i.id }.should.be not_accepted_items
     }
   end
-
 end
-
-describe 'Item associates onlist' do
-  Item.onlist
-
-  it 'should be associated' do
-    Item.should.have_one :onlist
-  end
-
-  it 'should be unlisted, but neither accepted not rejected' do
+def describe_instance_behaviour(context)
+  context.it 'should be unlisted, but neither accepted not rejected' do
     create_item { |item|
       item.should.be.unlisted
       item.should.not.be.accepted
       item.should.not.be.rejected
     }
   end
-
-  it 'should be accepted and not unlisted anymore' do
+  context.it 'should be accepted and not unlisted anymore' do
     create_item { |item|
       item.accept # accept_at Time.now
 
@@ -94,8 +78,7 @@ describe 'Item associates onlist' do
       item.should.not.be.unlisted
     }
   end
-
-  it 'should be rejected and not unlisted anymore' do
+  context.it 'should be rejected and not unlisted anymore' do
     create_item { |item|
       item.reject # reject_at Time.now
 
@@ -103,7 +86,17 @@ describe 'Item associates onlist' do
       item.should.not.be.unlisted
     }
   end
+end
 
+describe 'Item scopes when associated' do
+  Item.onlist
+  describe_scopes self
+end
+
+describe 'Item associates onlist' do
+  Item.onlist
+  it('should be associated') { Item.should.have_one :onlist }
+  describe_instance_behaviour self
 end
 
 describe 'Item associates onlist as whitelist' do
@@ -136,41 +129,42 @@ describe 'Item associates onlist as blacklist' do
 
 end
 
-describe 'Item composes default onlist' do
+describe 'Item scopes when aggregated' do
   Item.onlist :composed_of
-
-  it 'should be aggregated' do
-    Item.should.be_composed_of :onlist
-  end
-
-
+  describe_scopes self
 end
 
-describe 'Item composes customized onlist' do
+describe 'Item aggregates default onlist' do
+  Item.onlist :composed_of
+  it('should be aggregated') { Item.should.be_composed_of :onlist }
+  describe_instance_behaviour self
+end
+
+describe 'Item aggregates customized onlist' do
   Item.onlist :composed_of => [ :published_at, :hidden_at ]
 
 
 end
 
-describe 'Item composes default onlist as whitelist' do
+describe 'Item aggregates default onlist as whitelist' do
   Item.on_whitelist :composed_of
 
 
 end
 
-describe 'Item composes customized onlist as whitelist' do
+describe 'Item aggregates customized onlist as whitelist' do
   Item.on_whitelist :composed_of => :published_at
 
 
 end
 
-describe 'Item composes default onlist as blacklist' do
+describe 'Item aggregates default onlist as blacklist' do
   Item.on_blacklist :composed_of
 
 
 end
 
-describe 'Item composes customized onlist as blacklist' do
+describe 'Item aggregates customized onlist as blacklist' do
   Item.on_blacklist :composed_of => :hidden_at
 
 

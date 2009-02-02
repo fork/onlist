@@ -1,4 +1,4 @@
-require "#{ File.dirname __FILE__ }/initializer.rb"
+require "#{ File.dirname __FILE__ }/test_helper.rb"
 
 describe 'Onlist Entry' do
 
