@@ -52,7 +52,7 @@ These are invoked just after the record is updated by Onlist.
     $ git submodule add git://github.org/fork/onlist vendor/plugins/onlist
     $ ruby vendor/plugins/onlist/install.rb
 
-    # and
+    # create the migration
     $ script/generate onlist
 
 
